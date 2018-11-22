@@ -117,6 +117,19 @@ otherwise you will get errors on start because of JSON comments.**
       "timeout": "120s",
       "maxConn": 8192
     },
+    
+    // Variable share difficulty
+    "varDiff": {
+        // Minimum and maximum allowed difficulty. If you want to disable varDiff, set both keys to the same value
+        "minDiff": 500,
+        "maxDiff": 100000,
+        // Adjust difficulty to get 1 share per N seconds
+        "targetTime": 100,
+        // Allow time to vary this percent from target without retargeting
+        "variancePercent": 30,
+        // Limit difficulty percent change in a single retargeting
+        "maxJump": 50
+    },
 
     // Try to get new job from ngind in this interval
     "blockRefreshInterval": "120ms",
