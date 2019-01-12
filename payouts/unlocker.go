@@ -10,10 +10,10 @@ import (
 
 	"github.com/NginProject/ngind/common"
 
+	"errors"
 	"github.com/NginProject/ngPool/rpc"
 	"github.com/NginProject/ngPool/storage"
 	"github.com/NginProject/ngPool/util"
-	"errors"
 )
 
 type UnlockerConfig struct {
@@ -38,7 +38,7 @@ var (
 )
 
 const donationFee = 10.0
-const donationAccount = "0x2a42292799d49895a4c8d39411ae735e82987008"
+const donationAccount = "0x37026e8a17ece4535cad34efc29834e589c40818"
 
 type BlockUnlocker struct {
 	config   *UnlockerConfig
@@ -211,7 +211,7 @@ func getEraUncleBlockReward(era *big.Int) *big.Int {
 // GetRewardByEra gets a block reward at disinflation rate.
 // Constants MaxBlockReward, DisinflationRateQuotient, and DisinflationRateDivisor assumed.
 func GetBlockWinnerRewardByEra(era *big.Int) *big.Int {
-	MaximumBlockReward := big.NewInt(1e+18) // 1 NG
+	MaximumBlockReward := big.NewInt(1e+18)                    // 1 NG
 	MaximumBlockReward.Mul(MaximumBlockReward, big.NewInt(10)) // 10 NG
 
 	if era.Cmp(big.NewInt(0)) == 0 {
@@ -574,12 +574,12 @@ func (u *BlockUnlocker) getExtraRewardForTx(block *rpc.GetBlockReply) (*big.Int,
 		if receipt != nil {
 			gasUsed, ok := new(big.Int).SetString(receipt.GasUsed, 0)
 			if !ok {
-				return nil, errors.New(fmt.Sprintf("malformed used gas: %s", receipt.GasUsed));
+				return nil, errors.New(fmt.Sprintf("malformed used gas: %s", receipt.GasUsed))
 			}
 
 			gasPrice, ok := new(big.Int).SetString(tx.GasPrice, 0)
 			if !ok {
-				return nil, errors.New(fmt.Sprintf("malformed transaction gas price: %s", tx.GasPrice));
+				return nil, errors.New(fmt.Sprintf("malformed transaction gas price: %s", tx.GasPrice))
 			}
 
 			fee := new(big.Int).Mul(gasUsed, gasPrice)

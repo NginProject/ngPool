@@ -11,8 +11,8 @@ import (
 	"net"
 	"time"
 
-	"strconv"
 	"github.com/NginProject/ngPool/util"
+	"strconv"
 )
 
 const (
@@ -110,9 +110,9 @@ func (cs *Session) getJob(hash, blob, target string) map[string]string {
 	targetBytes := make([]byte, 8)
 	binary.LittleEndian.PutUint64(targetBytes[0:], targetReversed)
 
-	return map[string]string{ "blob": blob,
-	                          "job_id": cs.hashNoNonce[2:34],
-	                          "target": hex.EncodeToString(targetBytes) }
+	return map[string]string{"blob": blob,
+		"job_id": cs.hashNoNonce[2:34],
+		"target": hex.EncodeToString(targetBytes)}
 }
 
 func (cs *Session) handleTCPMessage(s *ProxyServer, req *StratumReq) error {
@@ -131,11 +131,11 @@ func (cs *Session) handleTCPMessage(s *ProxyServer, req *StratumReq) error {
 		}
 		if reply {
 			work, _ := s.handleGetWorkRPC(cs)
-			result := &JobRPC{ Id: "0",
-	                           Job: cs.getJob(work[0], work[1], work[2]),
-	                           Status: "OK" }
+			result := &JobRPC{Id: "0",
+				Job:    cs.getJob(work[0], work[1], work[2]),
+				Status: "OK"}
 			return cs.sendTCPResult(req.Id, result)
-        }
+		}
 
 		return cs.sendTCPResult(req.Id, reply)
 	case "getjob":
@@ -143,25 +143,25 @@ func (cs *Session) handleTCPMessage(s *ProxyServer, req *StratumReq) error {
 		if errReply != nil {
 			return cs.sendTCPError(req.Id, errReply)
 		}
-		result := &JobRPC{ Id: "0",
-	                       Job: cs.getJob(work[0], work[1], work[2]),
-	                       Status: "OK" }
+		result := &JobRPC{Id: "0",
+			Job:    cs.getJob(work[0], work[1], work[2]),
+			Status: "OK"}
 		return cs.sendTCPResult(req.Id, result)
-   case "submit":
-       var params map[string]string
+	case "submit":
+		var params map[string]string
 		err := json.Unmarshal(*req.Params, &params)
 		if err != nil {
 			log.Println("Malformed stratum request params from", cs.ip)
 			return err
 		}
-        prm := []string{ "0x" + params["nonce"], cs.hashNoNonce, "0x" + params["result"] /*mixdigest*/ }
-        reply, errReply := s.handleTCPSubmitRPC(cs, req.Worker, prm)
+		prm := []string{"0x" + params["nonce"], cs.hashNoNonce, "0x" + params["result"] /*mixdigest*/}
+		reply, errReply := s.handleTCPSubmitRPC(cs, req.Worker, prm)
 		if errReply != nil {
 			return cs.sendTCPError(req.Id, errReply)
 		}
 		if reply {
-		   result := &JobRPC{ Status: "OK" }
-		   return cs.sendTCPResult(req.Id, result)
+			result := &JobRPC{Status: "OK"}
+			return cs.sendTCPResult(req.Id, result)
 		}
 		return cs.sendTCPResult(req.Id, &reply)
 	case "keepalived":
@@ -184,9 +184,9 @@ func (cs *Session) pushNewJob(work *[]string) error {
 	cs.Lock()
 	defer cs.Unlock()
 
-	message := JSONPushMessage{ Version: "2.0",
-	                            Method: "job",
-	                            Params: cs.getJob((*work)[0], (*work)[1], (*work)[2]) }
+	message := JSONPushMessage{Version: "2.0",
+		Method: "job",
+		Params: cs.getJob((*work)[0], (*work)[1], (*work)[2])}
 	return cs.enc.Encode(&message)
 }
 

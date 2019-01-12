@@ -26,11 +26,11 @@ module.exports = function(environment) {
       StratumPort: 3333,
 
       // Fee and payout details
-      PoolFee: '1%',
-      PayoutThreshold: '5 WEB',
+      PoolFee: '0%',
+      PayoutThreshold: '5 NG',
 
       // For network hashrate (change for your favourite fork)
-      BlockTime: 12.0
+      BlockTime: 13.0
     }
   };
 

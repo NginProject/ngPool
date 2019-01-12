@@ -13,13 +13,13 @@ import (
 var hasher = M00N.New()
 
 var (
-	big0 = big.NewInt(0)
-	maxUint256  = new(big.Int).Exp(big.NewInt(2), big.NewInt(256), big.NewInt(0))
+	big0       = big.NewInt(0)
+	maxUint256 = new(big.Int).Exp(big.NewInt(2), big.NewInt(256), big.NewInt(0))
 )
 
 func (s *ProxyServer) checkHash(hash *big.Int, difficulty *big.Int) bool {
 	/* Cannot happen if block header diff is validated prior to PoW, but can
-		 happen if PoW is checked first due to parallel PoW checking.
+	happen if PoW is checked first due to parallel PoW checking.
 	*/
 	if difficulty.Cmp(big0) == 0 {
 		return false

@@ -22,7 +22,7 @@ func (s *ProxyServer) handleLoginRPC(cs *Session, params map[string]string, id s
 		return false, &ErrorReply{Code: -1, Message: "Invalid params"}
 	}
 
-    login := strings.ToLower(params["login"])
+	login := strings.ToLower(params["login"])
 	if !util.IsValidHexAddress(login) {
 		return false, &ErrorReply{Code: -1, Message: "Invalid login"}
 	}
@@ -78,7 +78,7 @@ func (s *ProxyServer) calcNewDiff(cs *Session) int64 {
 	}
 
 	var avg float64
-	for i := 0; i<len(cs.lastShareDurations); i++ {
+	for i := 0; i < len(cs.lastShareDurations); i++ {
 		avg += cs.lastShareDurations[i].Seconds()
 	}
 	avg /= float64(len(cs.lastShareDurations))
@@ -92,7 +92,7 @@ func (s *ProxyServer) calcNewDiff(cs *Session) int64 {
 
 	if avg > tMax && cs.diff > config.MinDiff {
 		newDiff = int64(config.TargetTime / avg * float64(cs.diff))
-        newDiff = util.Max(newDiff, config.MinDiff)
+		newDiff = util.Max(newDiff, config.MinDiff)
 		direction = -1
 	} else if avg < tMin && cs.diff < config.MaxDiff {
 		newDiff = int64(config.TargetTime / avg * float64(cs.diff))
@@ -102,9 +102,9 @@ func (s *ProxyServer) calcNewDiff(cs *Session) int64 {
 		return cs.diff
 	}
 
-	if math.Abs(float64(newDiff - cs.diff)) / float64(cs.diff) * 100 > float64(config.MaxJump) {
-		change := int64(float64(config.MaxJump) / 100 * float64(cs.diff) * direction);
-		newDiff = cs.diff + change;
+	if math.Abs(float64(newDiff-cs.diff))/float64(cs.diff)*100 > float64(config.MaxJump) {
+		change := int64(float64(config.MaxJump) / 100 * float64(cs.diff) * direction)
+		newDiff = cs.diff + change
 	}
 	cs.lastShareDurations = nil
 	return newDiff

@@ -165,7 +165,7 @@ func (r *RPCClient) GetBalance(address string) (*big.Int, error) {
 
 	balance, ok := new(big.Int).SetString(reply, 0)
 	if !ok {
-		return nil, errors.New(fmt.Sprintf("malformed balance: %d", reply));
+		return nil, errors.New(fmt.Sprintf("malformed balance: %d", reply))
 	}
 
 	return balance, err

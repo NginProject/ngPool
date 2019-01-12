@@ -14,9 +14,9 @@ type StratumReq struct {
 }
 
 type JobRPC struct {
-	Id string             `json:"id"`
-	Job map[string]string `json:"job"`
-	Status string         `json:"status"`
+	Id     string            `json:"id"`
+	Job    map[string]string `json:"job"`
+	Status string            `json:"status"`
 }
 
 // Stratum

@@ -85,8 +85,8 @@
 
 	"unlocker": {
 		"enabled": true,
-		"poolFee": 1.0,
-		"poolFeeAddress": "",
+		"poolFee": 0.0,
+		"poolFeeAddress": "0xPOOL_FEE_ADDR",
 		"depth": 32,
 		"immatureDepth": 16,
 		"keepTxFees": false,
@@ -101,7 +101,7 @@
 		"interval": "120m",
 		"daemon": "http://127.0.0.1:52521",
 		"timeout": "10s",
-		"address": "0x0",
+		"address": "0xPOOL_ADDR",
 		"gas": "21000",
 		"gasPrice": "200000000000",
 		"autoGas": true,
