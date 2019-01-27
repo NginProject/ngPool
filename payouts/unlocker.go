@@ -228,7 +228,9 @@ func GetBlockWinnerRewardByEra(era *big.Int) *big.Int {
 
 	r.Mul(MaximumBlockReward, q)
 	r.Div(r, d)
-	r.Div(r, big.NewInt(2))
+	if era.Cmp(big.NewInt(7)) >= 0 {
+		r.Div(r, big.NewInt(2))
+	}
 	return r
 }
 
